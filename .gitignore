@@ -4,6 +4,8 @@
 .hugo_build.lock
 
 # Photos (stored in private repo)
+# Private photos repository (cloned into static/images)
+static/images/
 content/photos/*.jpg
 content/photos/*.jpeg
 content/photos/*.png
