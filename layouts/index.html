@@ -1,0 +1,279 @@
+{{ define "main" }}
+<style>
+    .site-header {
+        text-align: center;
+        padding: 3rem 2rem 2rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .site-title {
+        font-size: 2.5rem;
+        font-weight: 300;
+        letter-spacing: 3px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .site-description {
+        color: #666;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .social-links a {
+        margin: 0 1rem;
+        color: #333;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+    
+    .gallery-filters {
+        text-align: center;
+        padding: 2rem 1rem;
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.95);
+        z-index: 100;
+        border-bottom: 1px solid #e0e0e0;
+        backdrop-filter: blur(10px);
+    }
+    
+    .filter-btn {
+        padding: 0.75rem 1.5rem;
+        margin: 0.5rem;
+        border: 1px solid #333;
+        background: white;
+        color: #333;
+        cursor: pointer;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover {
+        background: #f5f5f5;
+    }
+    
+    .filter-btn.active {
+        background: #333;
+        color: white;
+    }
+    
+    .photo-count {
+        margin-top: 1rem;
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    /* Override theme's justified gallery to use grid */
+    .gallery > div {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+        gap: 1rem !important;
+        padding: 2rem 1rem !important;
+        max-width: 1600px !important;
+        margin: 0 auto !important;
+        visibility: visible !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+    
+    @media (max-width: 768px) {
+        .gallery > div {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+            gap: 0.5rem !important;
+        }
+    }
+    
+    .gallery-item {
+        position: relative !important;
+        overflow: hidden !important;
+        display: block !important;
+    }
+    
+    .gallery-item.hidden {
+        display: none !important;
+    }
+    
+    .gallery-item figure {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .gallery-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        transition: transform 0.3s ease !important;
+    }
+    
+    .gallery-item:hover img {
+        transform: scale(1.05) !important;
+    }
+    
+    footer {
+        text-align: center;
+        padding: 3rem 2rem;
+        border-top: 1px solid #e0e0e0;
+        color: #666;
+        margin-top: 3rem;
+    }
+</style>
+
+<header class="site-header">
+    <h1 class="site-title">{{ .Site.Title }}</h1>
+    <p class="site-description">{{ .Site.Params.description }}</p>
+    <nav class="social-links">
+        {{ range $key, $value := .Site.Params.socialIcons }}
+        {{ if $value }}
+        <a href="{{ $value }}" {{ if hasPrefix $value "http" }}target="_blank" rel="noopener"{{ end }}>
+            {{ $key | humanize }}
+        </a>
+        {{ end }}
+        {{ end }}
+    </nav>
+</header>
+
+<nav class="gallery-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="analog">Analog</button>
+    <button class="filter-btn" data-filter="digital">Digital</button>
+    <button class="filter-btn" data-filter="bw">Black & White</button>
+    <button class="filter-btn" data-filter="color">Color</button>
+    <div class="photo-count" id="photo-count"></div>
+</nav>
+
+<section class="gallery">
+    <div id="gallery">
+        {{ range readDir "static/images/analog/black-white" }}
+            {{ if and (not .IsDir) (strings.HasSuffix .Name ".webp") }}
+            <a class="gallery-item" 
+               href="/images/analog/black-white/{{ .Name }}" 
+               data-pswp-src="/images/analog/black-white/{{ .Name }}"
+               data-category="analog bw"
+               style="aspect-ratio: 1 / 1">
+                <figure style="aspect-ratio: 1 / 1">
+                    <img class="lazyload" 
+                         data-src="/images/analog/black-white/{{ .Name }}" 
+                         alt="Analog Black & White" 
+                         loading="lazy">
+                </figure>
+            </a>
+            {{ end }}
+        {{ end }}
+
+        {{ range readDir "static/images/analog/color" }}
+            {{ if and (not .IsDir) (strings.HasSuffix .Name ".webp") }}
+            <a class="gallery-item" 
+               href="/images/analog/color/{{ .Name }}"
+               data-pswp-src="/images/analog/color/{{ .Name }}"
+               data-category="analog color"
+               style="aspect-ratio: 1 / 1">
+                <figure style="aspect-ratio: 1 / 1">
+                    <img class="lazyload" 
+                         data-src="/images/analog/color/{{ .Name }}" 
+                         alt="Analog Color" 
+                         loading="lazy">
+                </figure>
+            </a>
+            {{ end }}
+        {{ end }}
+
+        {{ range readDir "static/images/digital/black-white" }}
+            {{ if and (not .IsDir) (strings.HasSuffix .Name ".webp") }}
+            <a class="gallery-item" 
+               href="/images/digital/black-white/{{ .Name }}"
+               data-pswp-src="/images/digital/black-white/{{ .Name }}"
+               data-category="digital bw"
+               style="aspect-ratio: 1 / 1">
+                <figure style="aspect-ratio: 1 / 1">
+                    <img class="lazyload" 
+                         data-src="/images/digital/black-white/{{ .Name }}" 
+                         alt="Digital Black & White" 
+                         loading="lazy">
+                </figure>
+            </a>
+            {{ end }}
+        {{ end }}
+
+        {{ range readDir "static/images/digital/color" }}
+            {{ if and (not .IsDir) (strings.HasSuffix .Name ".webp") }}
+            <a class="gallery-item" 
+               href="/images/digital/color/{{ .Name }}"
+               data-pswp-src="/images/digital/color/{{ .Name }}"
+               data-category="digital color"
+               style="aspect-ratio: 1 / 1">
+                <figure style="aspect-ratio: 1 / 1">
+                    <img class="lazyload" 
+                         data-src="/images/digital/color/{{ .Name }}" 
+                         alt="Digital Color" 
+                         loading="lazy">
+                </figure>
+            </a>
+            {{ end }}
+        {{ end }}
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const countDisplay = document.getElementById('photo-count');
+    
+    // Load lazy images immediately
+    document.querySelectorAll('img.lazyload').forEach(img => {
+        img.src = img.getAttribute('data-src');
+    });
+    
+    // Set actual image dimensions for PhotoSwipe
+    document.querySelectorAll('.gallery-item').forEach(link => {
+        const img = new Image();
+        img.onload = function() {
+            link.setAttribute('data-pswp-width', this.naturalWidth);
+            link.setAttribute('data-pswp-height', this.naturalHeight);
+        };
+        img.src = link.getAttribute('data-pswp-src');
+    });
+    
+    function updateCount(count) {
+        if (countDisplay) {
+            countDisplay.textContent = `Showing ${count} ${count === 1 ? 'photo' : 'photos'}`;
+        }
+    }
+    
+    updateCount(galleryItems.length);
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+            let visibleCount = 0;
+
+            galleryItems.forEach(item => {
+                const categories = item.getAttribute('data-category').trim().split(' ');
+                
+                if (filter === 'all') {
+                    item.classList.remove('hidden');
+                    item.style.display = '';
+                    visibleCount++;
+                } else if (categories.includes(filter)) {
+                    item.classList.remove('hidden');
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                    item.style.display = 'none';
+                }
+            });
+            
+            updateCount(visibleCount);
+        });
+    });
+});
+</script>
+{{ end }}

@@ -1,12 +1,49 @@
 baseURL = "https://berkan.no/"
-languageCode = "en-us"
+languageCode = "en"
 title = "Berkan Uslu"
 theme = "gallery"
+copyright = "© Berkan Uslu. All Rights Reserved."
+defaultContentLanguage = "en"
+enableRobotsTXT = true
+timeZone = "Europe/Oslo"
+timeout = "120s"
+
+# Gallery theme requires this
+disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
-  author = "Berkan Uslu"
+  title = "Berkan Uslu"
   description = "Street • Travel • Analog • Photography"
+  defaultTheme = "light"
   
+  [params.author]
+    name = "Berkan Uslu"
+    email = "info@berkan.no"
+  
+  [params.socialIcons]
+    instagram = "https://www.instagram.com/byberkanuslu/"
+    email = "mailto:info@berkan.no"
+  
+  [params.gallery]
+    # Row-based layout settings
+    targetRowHeight = 300        # Target height for gallery rows
+    targetRowHeightTolerance = 0.25
+    boxSpacing = 10              # Space between images
+
+[outputs]
+  home = ["HTML"]
+  page = ["HTML"]
+  section = ["HTML"]
+
+[imaging]
+  quality = 85
+  resampleFilter = "Lanczos"
+  
+[imaging.exif]
+  disableDate = false
+  disableLatLong = true
+  includeFields = "ImageDescription|Orientation"
+
 [menu]
   [[menu.main]]
     name = "Home"
@@ -22,7 +59,3 @@ theme = "gallery"
     name = "Contact"
     url = "/contact/"
     weight = 3
-
-[imaging]
-  quality = 85
-  resampleFilter = "Lanczos"
