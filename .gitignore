@@ -1,0 +1,18 @@
+# Hugo
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Photos (stored in private repo)
+content/photos/*.jpg
+content/photos/*.jpeg
+content/photos/*.png
+content/photos/*.webp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
