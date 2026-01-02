@@ -1,3 +1,6 @@
 [submodule "themes/gallery"]
 	path = themes/gallery
 	url = https://github.com/nicokaiser/hugo-theme-gallery
+[submodule "static/images"]
+	path = static/images
+	url = https://github.com/berkanuslu/berkan-no-photos.git
