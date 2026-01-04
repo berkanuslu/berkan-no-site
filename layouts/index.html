@@ -2,7 +2,7 @@
 <style>
     .site-header {
         text-align: center;
-        padding: 3rem 2rem 2rem;
+        padding: 0rem 2rem 2rem;
         border-bottom: 1px solid #e0e0e0;
     }
     
@@ -29,7 +29,7 @@
     
     .gallery-filters {
         text-align: center;
-        padding: 2rem 1rem;
+        padding: 1rem 1rem;
         position: sticky;
         top: 0;
         background: rgba(255, 255, 255, 0.95);
@@ -125,21 +125,20 @@
 <header class="site-header">
     <h1 class="site-title">{{ .Site.Title }}</h1>
     <p class="site-description">{{ .Site.Params.description }}</p>
-    <nav class="social-links">
+    <section class="social-links">
         {{ range $key, $value := .Site.Params.socialIcons }}
         {{ if $value }}
-        <a href="{{ $value }}" {{ if hasPrefix $value "http" }}target="_blank" rel="noopener"{{ end }}>
+        <a href="{{ $value }}" target="_blank" rel="noopener">
             {{ $key | humanize }}
         </a>
         {{ end }}
         {{ end }}
-    </nav>
+    </section>
 </header>
 
 <nav class="gallery-filters">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="analog">Analog</button>
-    <button class="filter-btn" data-filter="digital">Digital</button>
     <button class="filter-btn" data-filter="bw">Black & White</button>
     <button class="filter-btn" data-filter="color">Color</button>
     <div class="photo-count" id="photo-count"></div>

@@ -38,11 +38,10 @@ disableKinds = ["taxonomy", "term", "RSS"]
 [imaging]
   quality = 85
   resampleFilter = "Lanczos"
-  
-[imaging.exif]
-  disableDate = false
-  disableLatLong = true
-  includeFields = "ImageDescription|Orientation"
+  [imaging.exif]
+    disableDate = false
+    disableLatLong = true
+    includeFields = "ImageDescription|Orientation"
 
 [menu]
   [[menu.main]]
